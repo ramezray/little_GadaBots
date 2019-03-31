@@ -19,13 +19,11 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:8080",
-  "eslintConfig": {
-    "extends": "react-app"
-  },
+  "proxy": "http://localhost:3001/",
+  "eslintConfig": {"extends": "react-app"},
   "browserslist": [
     ">0.2%",
     "not dead",
