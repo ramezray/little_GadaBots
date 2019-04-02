@@ -5,6 +5,7 @@ const path = require('path');
 
 const botSchema = new Schema({
       name: { type: String, required: true },
+      photo: { type: String, required: false },
       checkIns:[
             {
             pic: { type: String, required: true },

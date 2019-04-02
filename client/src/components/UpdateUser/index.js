@@ -4,6 +4,7 @@ import {
 
 } from 'reactstrap';
 import API from '../../utils/API';
+import ReactS3Uploader from "react-s3-uploader";
 
 class UpdateUser extends Component {
 
@@ -82,6 +83,7 @@ onChange = e => {
   }
 
   render() {
+    console.log(this.state)
     return (
       <>
       <Button onClick={this.handleShow} href='#'>
@@ -165,7 +167,14 @@ onChange = e => {
               <br />
               <div className="form-row">
               <div className="col-8">
-                <div className="custom-file">
+                <div>
+                  {/* TODO: Fix styles and add label */}
+                <ReactS3Uploader 
+                            signingUrl="/s3/sign"
+                            autoUpload="true" 
+                            onFinish={ (req) => { API.updateUserImage(this.state.userid, req.publicUrl); }}/>
+                </div>
+                {/* <div className="custom-file">
                   <input type="file"
                     className="custom-file-input"
                     id="customFile"
@@ -174,17 +183,17 @@ onChange = e => {
                     className="custom-file-label"
                     name="photo" >Upload a Profile Pic
                   </label>
-                </div>
+                </div> */}
                 </div>
             
-              <div className="col-4">
+              {/* <div className="col-4">
                 <button
                   name="photoUpdate"
                   type="submit"
                   className="btn btn-primary"
                   onClick={this.handleFormSubmit}
                 >Update Picture </button>
-              </div>
+              </div> */}
               </div>
               <button type="button" 
               className="btn btn-secondary" 

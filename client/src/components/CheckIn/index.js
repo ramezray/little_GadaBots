@@ -3,6 +3,7 @@ import API from '../../utils/API'
 import {
   Button,
  } from 'reactstrap';
+ import ReactS3Uploader from "react-s3-uploader";
 
 
 class CheckIn extends Component {
@@ -85,16 +86,16 @@ onChange = e => {
     return (
        <>
 
-          <Button onClick={this.handleShow} href='#'>
+          <Button onClick={this.handleShow} href='#' className="mt-2 mb-2">
            Check In GadaBot
           </Button>
         {this.state.show ?
 
       
        <div className="card  w-75">
-       <div className="card-body">
+       <div className="card-body ">
                 <form>
-                <div className="form-group">
+                <div className="form-group ">
                   <label>Enter Your GaddaBot's ID</label>
                     <input className="form-control" 
                     id="gaddaBot-id"
@@ -105,7 +106,7 @@ onChange = e => {
                 </div>
                 <div className="form-group">
                   <label>
-                    Where is your Gada-Bot now?
+                    Where is your GadaBot now?
                   </label>
                     <input  
                     className="form-control" 
@@ -127,7 +128,15 @@ onChange = e => {
                   value={this.state.journal} 
                   onChange={this.onChange}/>
                 </div>
-              <div className="form-group">
+                <div>
+                  {/* TODO: Fix styles and add label */}
+                <img src={this.state.photo} alt= "Bot" hidden= { !this.state.photo } />
+                <ReactS3Uploader 
+                            signingUrl="/s3/sign"
+                            autoUpload="true" 
+                            onFinish={ (req) => { this.setState({ photo: req.publicUrl}) }}/>
+                </div>
+              {/* <div className="form-group">
                 <div className="custom-file">
                   <input type="file" 
                   className="custom-file-input" 
@@ -138,7 +147,7 @@ onChange = e => {
                   name="photo" >Upload a Pic
                   </label>
                 </div>
-              </div>
+              </div> */}
                 <button 
                 type="submit" 
                 className="btn btn-primary"

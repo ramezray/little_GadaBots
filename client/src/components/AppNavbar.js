@@ -42,7 +42,7 @@ class AppNavbar extends Component {
           </span>
         </NavItem>
         <NavLink href="/userProfile">User Profile</NavLink>
-        <NavLink href="/botProfile">Bot Profile</NavLink>
+        {/* <NavLink href="/botProfile">Bot Profile</NavLink> */}
         <NavItem>
           <Logout />
         </NavItem>

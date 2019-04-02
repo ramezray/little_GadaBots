@@ -8,7 +8,7 @@ import {
   CardText,
   CardImg
 } from "reactstrap";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 import API from "../../utils/API";
 
@@ -73,11 +73,6 @@ export class MapContainer extends Component {
     }
   };
   getOneBotInfo = () => {
-    console.log("entering getOneBotInfo", this.state.selectedId);
-    if (this.state.selectedId == null) {
-      console.log("No bot to get!");
-      return;
-    }
     API.getBot(this.state.selectedId)
       .then(res => {
         console.log("getOneBotInfo got", res.data);
@@ -108,8 +103,8 @@ export class MapContainer extends Component {
         zoom={1.25}
         style={mapStyles}
         initialCenter={{
-          lat: 37.759703,
-          lng: -122.428093
+          lat: 0,
+          lng: 0
         }}
       >
         {this.createMarker()}
@@ -120,24 +115,27 @@ export class MapContainer extends Component {
         >
           <Container className="m-2">
             <Card body>
-              <CardTitle>My Name is {this.state.InfoWindowBotName}</CardTitle>
+              <CardTitle className="font-weight-bold">
+                Hi My Name is {this.state.InfoWindowBotName}
+              </CardTitle>
               <CardImg
-                top
-                width="1px"
                 height="150px"
                 src={this.state.InfoWindowBotImage}
                 alt="Card image cap"
               />
-              <CardText>
+              <CardText className="font-weight-bold text-capitalize">
                 Bot's Journal Entry: {this.state.InfoWindowBotjournalEntry}
               </CardText>
-              <CardText>
+              <CardText className="font-weight-bold text-capitalize">
                 Last Location Visited: {this.state.InfoWindowBotLocation}
               </CardText>
               <Container>
                 <Router>
-                  <Link to={`/botProfile/${this.state.selectedId}` } state={this.state.selectedId}>
-                  <Button >View Bot</Button>
+                  <Link
+                    to={`/botProfile/${this.state.selectedId}`}
+                    state={this.state.selectedId}
+                  >
+                    <Button className="float-right">View Bot</Button>
                   </Link>
                 </Router>
               </Container>

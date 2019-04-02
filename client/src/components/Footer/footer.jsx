@@ -4,7 +4,7 @@ import "./footer.css";
 class Footer extends Component {
   render() {
     return (
-      <div className="card" id="footer">
+      <div className="card mt-25px" id="footer">
         <div className="card-header">Copyright &#169; 2019 GadaBots Team</div>
       </div>
     );
@@ -12,4 +12,3 @@ class Footer extends Component {
 }
 
 export default Footer;
-

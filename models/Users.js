@@ -20,6 +20,10 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  image_url: {
+    type: String,
+    required: false
+  },
   bots:[
     {type: Schema.Types.ObjectId, ref: "Bot"}
   ]

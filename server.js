@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const path = require('path');
@@ -26,6 +27,16 @@ mongoose
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use("/api/bots", bots);
+
+app.use('/s3', require('react-s3-uploader/s3router')({
+  bucket: "gadabots",
+  headers: {'Access-Control-Allow-Origin': '*'},
+  region: 'us-east-1',
+  ACL: 'public-read',
+  uniquePrefix: true 
+}));
+
+console.log("Using S3 Access Key:" + process.env.AWS_ACCESS_KEY_ID)
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
