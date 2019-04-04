@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import CheckIn from "../components/CheckIn";
 import FunFact from "../components/FunFact";
-import CreateGadaBot from "../components/CreateGadaBot";
+import Canvas from "../components/Canvas";
 import API from "../utils/API";
 
 class App extends Component {
@@ -24,32 +24,33 @@ class App extends Component {
           location: res.data.checkIns[0].location,
           bot_Name: res.data.name,
           Created_Date: res.data.checkIns[0].date,
-          Bot_Image: res.data.checkIns[0].pic
+          Bot_Image: res.data.checkIns[0].pic, 
+          checkIns: res.data.checkIns
         });
       })
       .catch(error => console.log(error));
   };
 
   componentDidMount() {
-    this.getOneBotForBotProfile();
+    if (this.state.bot_Id === null) {
+
+      this.getOneBotForBotProfile();
+      console.log("the sate is:", this.state)
+    }
   }
+
 
   render() {
     return (
       <div className="container text-capitalize">
         <CheckIn />
-        <CreateGadaBot />
         <br />
         <br />
         <div alt="becauseItGotMad">
           <div className="card">
             <div className="row">
               <div className="col-3">
-                <img
-                  className="card-img-top"
-                  src={this.state.Bot_Image}
-                  alt={"this.state.bot_Id.name"}
-                />
+                <Canvas  src={this.state.Bot_Image} alt={this.state.bot_Name}></Canvas>
               </div>
               <div className="card-body col-9">
                 <div className="card-title">
@@ -59,6 +60,7 @@ class App extends Component {
                 <p>
                   <strong>Hometown: </strong>
                   {this.state.location}
+                  {console.log("This is the town home", this.state.location)}
                 </p>
                 <p>
                   <strong>Created Date: </strong>
@@ -69,9 +71,23 @@ class App extends Component {
           </div>
           <br />
           <br />
-          <div className="text-primary">
-            <FunFact location={this.state.location} />
-          </div>
+         {this.state.checkIns ? <ul className="list-group">
+            {this.state.checkIns.map(checkIn => (
+              <FunFact
+                key={checkIn._id}
+                pic={checkIn.pic}
+                location={checkIn.location}
+                date={checkIn.date}
+                journalEntry={checkIn.journalEntry}
+              />
+            ))}
+          </ul> : <span></span>} 
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
       </div>
     );

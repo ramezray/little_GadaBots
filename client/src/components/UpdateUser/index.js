@@ -13,7 +13,7 @@ class UpdateUser extends Component {
 
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    console.log(props);
+    //console.log(props);
     this.state = {
       show: false,
       userid: props.user._id,
@@ -57,12 +57,6 @@ onChange = e => {
       case "nameUpdate":
         API.updateName(this.state.userid, this.state.name);
         break;
-      case "passwordUpdate":
-        // code block
-      if (this.state.newPassword === this.state.newPasswordCheck){
-        alert("New password: "+ this.state.newPassword);
-      }
-        break;
     case "photoUpdate":
         // code block
         alert("new photo submit clicked");
@@ -91,110 +85,37 @@ onChange = e => {
     </Button>
 
     {this.state.show ?
-        <div className="card  w-75">
+        <div className="card">
           <div className="card-body">
             <div className="update-user">
               <form>
 
                 <div className="form-row align-items-center">
-                  <div class="col-7">
+                  
                     <label>Change your Name</label>
                     <input className="form-control"
                       id="name-update"
                       name="name"
                       value={this.state.name}
                       onChange={this.handleInputChange} />
-                  </div>
-                  <div className="col-auto">
+                 
+                  
                   <br />
                   <button
                   name="nameUpdate"
                   type="submit"
                   className="btn btn-primary"
                   onClick={this.handleFormSubmit}>Update name</button>
-                  </div>
+                 
                 </div>
                 <br />
-                <div className="form-row align-items-center">
-                 <div className="col-6">
-                  <label>
-                    Enter Your Current Password
-                  </label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    id="currentPassword"
-                    name="currentPassword"
-                    value={this.state.currentPassword}
-                    onChange={this.handleInputChange} />
-                    </div>
 
-                <div className="col-6">
-                  <label>
-                    Enter a new Password
-                  </label>
-                  <input
-                    className="form-control"
-                    type="password"
-                    id="newPassword"
-                    name="newPassword"
-                    value={this.state.newPassword}
-                    onChange={this.handleInputChange} />
-                </div>
-
-                <div className="col-6">
-                <label>
-                    Re-enter your new Password
-                    </label>
-                  <input
-                    className="form-control"
-                    type="password"
-                    id="currentPasswordCheck"
-                    name="newPasswordCheck"
-                    value={this.state.newPasswordCheck}
-                    onChange={this.handleInputChange} />
-                  </div>
-               
-                <div className="col-6">
-                    <br />
-                    <button
-                    name="passwordUpdate"
-                    type="submit"
-                    className="btn btn-primary"
-                    onClick={this.handleFormSubmit}>Update Password</button>
-                  </div>
-               </div>
-              <br />
-              <div className="form-row">
-              <div className="col-8">
-                <div>
                   {/* TODO: Fix styles and add label */}
                 <ReactS3Uploader 
                             signingUrl="/s3/sign"
                             autoUpload="true" 
                             onFinish={ (req) => { API.updateUserImage(this.state.userid, req.publicUrl); }}/>
-                </div>
-                {/* <div className="custom-file">
-                  <input type="file"
-                    className="custom-file-input"
-                    id="customFile"
-                    name="photo" />
-                  <label
-                    className="custom-file-label"
-                    name="photo" >Upload a Profile Pic
-                  </label>
-                </div> */}
-                </div>
-            
-              {/* <div className="col-4">
-                <button
-                  name="photoUpdate"
-                  type="submit"
-                  className="btn btn-primary"
-                  onClick={this.handleFormSubmit}
-                >Update Picture </button>
-              </div> */}
-              </div>
+                <br />
               <button type="button" 
               className="btn btn-secondary" 
               name="close"
@@ -204,7 +125,7 @@ onChange = e => {
           </div>
         </div>
       </div>
-      :  <span> </span>      }
+      :  <br />   }
        
       </>
     );

@@ -3,8 +3,10 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import { Button } from "reactstrap";
 import ReactS3Uploader from "react-s3-uploader";
+import LineBot from '../LineBot';
 
 class CreateGadaBot extends Component {
+
   constructor(props, context) {
     super(props, context);
 
@@ -12,11 +14,15 @@ class CreateGadaBot extends Component {
     this.handleClose = this.handleClose.bind(this);
 
     this.state = {
+      userId: props ? props.user._id : "",
+      user: props ? props.user : "",
       show: false,
       name: "",
       homeTown: "",
       journal: "",
-      photo: ""
+      photo: "GadaBot.svg",
+      newBot: {},
+      submitted: false,
     };
   }
 
@@ -26,6 +32,9 @@ class CreateGadaBot extends Component {
 
   handleShow() {
     this.setState({ show: true });
+  }
+  showNewBot() {
+    return (<LineBot botId={this.state.Id} />)
   }
 
   handleInputChange = event => {
@@ -50,27 +59,39 @@ class CreateGadaBot extends Component {
       console.log(`photo: ${this.state.photo}`);
 
       const gadaBot = {
+        userid: [this.state.userId],
         name: this.state.name,
         location: this.state.homeTown,
         journalEntry: this.state.journal,
-        photo: this.state.photo
+        pic: this.state.photo
       };
       console.log(gadaBot);
       //create a new bot
-      API.saveBot(gadaBot)
-
+      API.saveBot(gadaBot).then(res => {
+        this.setState({
+          newBot: res.data
+        })
+      })//.then(
+        //  this.state.newBot._id
+        //  ? API.updateUserBots(this.state.userId, [this.state.newBot]) 
+        //  : console.log("did not update user bots. No bot ID \r", this.state.newBot )
+        // )
         .then(
           this.setState({
             homeTown: "",
-            journal: ""
-            //   photo: ""
+            journal: "",
+            //   photo: "",
+            show: false,
+            submitted: true
           })
+
         )
         .catch(err => console.log(err));
     } else {
       alert("Please give your GadaBot a name and Home Town.");
     }
   };
+
 
   render() {
     return (
@@ -119,8 +140,8 @@ class CreateGadaBot extends Component {
                   </div>
                   <div className="form-group">
                     <div>
-                      {/* TODO: Fix styles and add label */}
-                      {/* <img src={this.state.photo} alt = "Bot" /> */}
+                      TODO: Fix styles and add label
+                       <img src={this.state.photo} alt="Bot" />
                       <ReactS3Uploader
                         signingUrl="/s3/sign"
                         autoUpload="true"
@@ -129,16 +150,16 @@ class CreateGadaBot extends Component {
                         }}
                       />
                     </div>
-                    {/* <div className="custom-file">
-                  <input type="file" 
-                  className="custom-file-input" 
-                  id="customFile" 
-                  name="photo"/>
-                  <label 
-                  className="custom-file-label" 
-                  name="photo" >Upload a Pic
+                    <div className="custom-file">
+                      <input type="file"
+                        className="custom-file-input"
+                        id="customFile"
+                        name="photo" />
+                      <label
+                        className="custom-file-label"
+                        name="photo" >Upload a Pic
                   </label>
-                </div> */}
+                    </div>
                     <button
                       type="submit"
                       className="btn btn-primary mt-2"
@@ -152,16 +173,20 @@ class CreateGadaBot extends Component {
                   type="button"
                   className="btn btn-secondary float-right"
                   name="close"
-                  onClick={this.handleClose}
-                >
+                  onClick={this.handleClose}>
                   close The Create Bot Form
                 </button>
               </div>
             </div>
           </div>
         ) : (
-          <span> </span>
-        )}
+            <div>
+              <LineBot bot={this.state.newBot}
+                submitted={this.state.submitted}
+                userId={this.state.userId} 
+                user={this.state.user}/>
+            </div>
+          )}
       </>
     );
   }

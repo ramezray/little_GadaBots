@@ -1,20 +1,17 @@
 import React, { Component } from "react";
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from "google-maps-react";
-import {
-  Container,
-  Button,
-  Card,
-  CardTitle,
-  CardText,
-  CardImg
-} from "reactstrap";
+import { Container, Button, Card, CardTitle, CardText } from "reactstrap";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 
 import API from "../../utils/API";
 
 const mapStyles = {
   width: "100%",
-  height: "200%"
+  height: 350,
+  display: "flex",
+  flexFlow: "row nowrap",
+  justifyContent: "center",
+  padding: 0
 };
 
 export class MapContainer extends Component {
@@ -80,7 +77,7 @@ export class MapContainer extends Component {
           InfoWindowBotName: res.data.name,
           InfoWindowBotImage: res.data.checkIns[0].pic,
           InfoWindowBotjournalEntry: res.data.checkIns[0].journalEntry,
-          InfoWindowBotLocation: res.data.checkIns[0].location
+          InfoWindowBotLocation: res.data.checkIns.slice(-1)[0].location
         });
       })
       .catch(err => console.log("getOneBotInfo error", err));
@@ -118,10 +115,10 @@ export class MapContainer extends Component {
               <CardTitle className="font-weight-bold">
                 Hi My Name is {this.state.InfoWindowBotName}
               </CardTitle>
-              <CardImg
-                height="150px"
+              <img
+                style={{ width: 120, height: 150 }}
                 src={this.state.InfoWindowBotImage}
-                alt="Card image cap"
+                alt="Bot"
               />
               <CardText className="font-weight-bold text-capitalize">
                 Bot's Journal Entry: {this.state.InfoWindowBotjournalEntry}

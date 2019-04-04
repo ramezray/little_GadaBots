@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import CheckIn from "../components/CheckIn";
 import UpdateUser from "../components/UpdateUser";
 import CreateGadaBot from "../components/CreateGadaBot";
-import testsBots from "./testBots.json";
-// import API from "../utils/API";
+// import testsBots from "./testBots.json";
+import API from "../utils/API";
 
 import {
   Card,
@@ -12,28 +12,45 @@ import {
   Col,
   CardTitle,
   CardText,
-  CardImg,
+  // CardImg,
   CardBody
 } from "reactstrap";
 
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
+const botData = [];
 class UserProfile extends Component {
   state = {
-    bots: testsBots
+    bots: []
   };
 
   static propTypes = {
     auth: PropTypes.object.isRequired
   };
 
-  componentDidMount() {
-    console.log(this.props.auth);
-    //     API.getBotsByUser(this.props.auth).then(res => {
-    //         this.setState(
-    //           {bots: res.data});
-    //     }).catch( error => console.log(error))
+  componentDidUpdate(prevProps) {
+    if (prevProps.auth.user === null && this.props.auth.user !== null) {
+      console.log("user Bots:", this.props.auth.user.bots);
+      if (this.props.auth.user.bots) {
+        // API.getBotsByUser(this.props.auth.user._id);
+
+        this.setState({ botIds: this.props.auth.user.bots });
+
+        this.props.auth.user.bots.forEach(id => {
+          API.getBot(id)
+            .then(res => {
+              console.log("this bot is:", res.data);
+              botData.push(res.data);
+            })
+            .then(
+              this.setState({
+                bots: botData
+              })
+            )
+            .then(console.log("state of bot page after id push", this.state));
+        });
+      }
+    }
   }
 
   render() {
@@ -51,19 +68,18 @@ class UserProfile extends Component {
 
         <center>
           <h1>{`Welcome ${user.name}`}!</h1>
-          <CheckIn />
-          <CreateGadaBot />
+          <CheckIn user={user} />
+          <CreateGadaBot user={user} />
           <br />
           <br />
         </center>
         <Row>
           <Col sm="4">
             <Card>
-              <CardImg
-                top
-                width="100%"
+              <img
+                style={{ width: 300, height: 450 }}
                 src="https://steembottracker.com/img/bot_logo.png"
-                alt="Card image cap"
+                alt="Card cap"
               />
               <CardBody>
                 <CardTitle>
@@ -76,46 +92,60 @@ class UserProfile extends Component {
             </Card>
           </Col>
           <Col sm="8">
-            <Card body>
-              <CardTitle>
-                <h4>Your GadaBot(s)</h4>
-              </CardTitle>
+            {this.state.bots ? (
+              <Card body>
+                <CardTitle>
+                  <h4>Your GadaBot(s)</h4>
+                </CardTitle>
 
-              <ul>
-                {this.state.bots.map(bot => (
-                  <li className="list-group-item list-group-item-action">
-                    <div key={bot.id}>
-                      <div className="row">
-                        <div className="col-3">
-                          <img
-                            className="card-img-top"
-                            src={bot.checkIns[0].pic}
-                            alt={bot.name}
-                          />
-                        </div>
-
-                        <div className="col-9">
-                          <div className="card-title">
-                            {" "}
-                            <h1>{bot.name}</h1>
+                <ul>
+                  {this.state.bots.map(bot => (
+                    <li className="list-group-item list-group-item-action">
+                      <div key={bot._id}>
+                        <div className="row">
+                          <div className="col-3">
+                            <img
+                              className="card-img-top"
+                              src={bot.checkIns[0].pic}
+                              alt={bot.name}
+                            />
                           </div>
-                          <p>
-                            <strong>Hometown: </strong>
-                            {bot.checkIns[0].location}{" "}
-                          </p>
-                          <p>
-                            <strong>Created Date: </strong>
-                            {bot.checkIns[0].date}{" "}
-                          </p>
+
+                          <div className="col-9">
+                            <div className="card-title">
+                              {" "}
+                              <h1>{bot.name}</h1>
+                            </div>
+                            <p>
+                              <strong>Hometown: </strong>
+                              {bot.checkIns[0].location}{" "}
+                            </p>
+                            <p>
+                              <strong>Created Date: </strong>
+                              {bot.checkIns[0].date}{" "}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </Card>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            ) : (
+              <div>this should not show</div>
+            )}
           </Col>
         </Row>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <Row />
       </Container>
     );
   }

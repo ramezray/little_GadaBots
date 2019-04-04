@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import BotProfile from "./pages/BotProfile";
 import UserProfile from "./pages/UserProfile";
 import NoMatch from "./pages/NoMatch";
+import FAQ from "./pages/FAQ";
 
 class App extends Component {
   componentDidMount() {
@@ -25,6 +26,7 @@ class App extends Component {
               <Route exact path="/" component={Home} />
               <Route exact path="/botProfile/:id" component={BotProfile} />
               <Route exact path="/userProfile" component={UserProfile} />
+              <Route exact path="/FAQ" component={FAQ} />
               <Route exact path="*" component={NoMatch} />
             </Switch>
             <Footer />
