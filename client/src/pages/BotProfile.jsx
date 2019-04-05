@@ -17,32 +17,28 @@ class App extends Component {
   getOneBotForBotProfile = () => {
     let idOfBotWeAreLookingFor = this.props.match.params.id;
     const apiPromise = API.getBot(idOfBotWeAreLookingFor);
-    apiPromise
-      .then(res => {
-        this.setState({
-          bot_Id: res.data._id,
-          location: res.data.checkIns[0].location,
-          bot_Name: res.data.name,
-          Created_Date: res.data.checkIns[0].date,
-          Bot_Image: res.data.checkIns[0].pic, 
-          checkIns: res.data.checkIns
-        });
-      })
-      .catch(error => console.log(error));
+    apiPromise.then(res => {
+      this.setState({
+        bot_Id: res.data._id,
+        location: res.data.checkIns[0].location,
+        bot_Name: res.data.name,
+        Created_Date: res.data.checkIns[0].date,
+        Bot_Image: res.data.checkIns[0].pic,
+        checkIns: res.data.checkIns
+      });
+    });
+    // .catch(error => console.log(error));
   };
 
   componentDidMount() {
     if (this.state.bot_Id === null) {
-
       this.getOneBotForBotProfile();
-      console.log("the sate is:", this.state)
     }
   }
 
-
   render() {
     return (
-      <div className="container text-capitalize">
+      <div className="container ">
         <CheckIn />
         <br />
         <br />
@@ -50,17 +46,16 @@ class App extends Component {
           <div className="card">
             <div className="row">
               <div className="col-3">
-                <Canvas  src={this.state.Bot_Image} alt={this.state.bot_Name}></Canvas>
+                <Canvas src={this.state.Bot_Image} alt={this.state.bot_Name} />
               </div>
               <div className="card-body col-9">
                 <div className="card-title">
                   {" "}
                   <h1>{this.state.bot_Name}</h1>
                 </div>
-                <p>
+                <p className="text-capitalize">
                   <strong>Hometown: </strong>
                   {this.state.location}
-                  {console.log("This is the town home", this.state.location)}
                 </p>
                 <p>
                   <strong>Created Date: </strong>
@@ -71,17 +66,21 @@ class App extends Component {
           </div>
           <br />
           <br />
-         {this.state.checkIns ? <ul className="list-group">
-            {this.state.checkIns.map(checkIn => (
-              <FunFact
-                key={checkIn._id}
-                pic={checkIn.pic}
-                location={checkIn.location}
-                date={checkIn.date}
-                journalEntry={checkIn.journalEntry}
-              />
-            ))}
-          </ul> : <span></span>} 
+          {this.state.checkIns ? (
+            <ul className="list-group">
+              {this.state.checkIns.map(checkIn => (
+                <FunFact
+                  key={checkIn._id}
+                  pic={checkIn.pic}
+                  location={checkIn.location}
+                  date={checkIn.date}
+                  journalEntry={checkIn.journalEntry}
+                />
+              ))}
+            </ul>
+          ) : (
+            <span />
+          )}
           <br />
           <br />
           <br />

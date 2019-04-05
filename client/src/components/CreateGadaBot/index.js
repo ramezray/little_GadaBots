@@ -3,10 +3,9 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import { Button } from "reactstrap";
 import ReactS3Uploader from "react-s3-uploader";
-import LineBot from '../LineBot';
+import LineBot from "../LineBot";
 
 class CreateGadaBot extends Component {
-
   constructor(props, context) {
     super(props, context);
 
@@ -22,7 +21,7 @@ class CreateGadaBot extends Component {
       journal: "",
       photo: "GadaBot.svg",
       newBot: {},
-      submitted: false,
+      submitted: false
     };
   }
 
@@ -34,7 +33,7 @@ class CreateGadaBot extends Component {
     this.setState({ show: true });
   }
   showNewBot() {
-    return (<LineBot botId={this.state.Id} />)
+    return <LineBot botId={this.state.Id} />;
   }
 
   handleInputChange = event => {
@@ -67,13 +66,14 @@ class CreateGadaBot extends Component {
       };
       console.log(gadaBot);
       //create a new bot
-      API.saveBot(gadaBot).then(res => {
-        this.setState({
-          newBot: res.data
-        })
-      })//.then(
+      API.saveBot(gadaBot)
+        .then(res => {
+          this.setState({
+            newBot: res.data
+          });
+        }) //.then(
         //  this.state.newBot._id
-        //  ? API.updateUserBots(this.state.userId, [this.state.newBot]) 
+        //  ? API.updateUserBots(this.state.userId, [this.state.newBot])
         //  : console.log("did not update user bots. No bot ID \r", this.state.newBot )
         // )
         .then(
@@ -84,19 +84,20 @@ class CreateGadaBot extends Component {
             show: false,
             submitted: true
           })
-
         )
         .catch(err => console.log(err));
     } else {
-      alert("Please give your GadaBot a name and Home Town.");
+      alert("Please give your GadaBot a Name and Home Town");
     }
   };
-
 
   render() {
     return (
       <>
-        <Button onClick={this.handleShow} href="#" className="float-right mt-2">
+        <Button
+          onClick={this.handleShow}
+          className=" btn btn-success float-right mt-2"
+        >
           Create a GadaBot
         </Button>
 
@@ -121,7 +122,7 @@ class CreateGadaBot extends Component {
                     <input
                       className="form-control"
                       id="gaddaBot-homeTown"
-                      placeholder="your address here"
+                      placeholder="You Address Here"
                       name="homeTown"
                       value={this.state.homeTown}
                       onChange={this.handleInputChange}
@@ -132,61 +133,53 @@ class CreateGadaBot extends Component {
                     <textarea
                       className="form-control"
                       id="journal"
-                      placeholder="Today we went to the park."
+                      placeholder="Memories from the trip.."
                       name="journal"
                       value={this.state.journal}
                       onChange={this.handleInputChange}
                     />
                   </div>
                   <div className="form-group">
-                    <div>
-                      TODO: Fix styles and add label
-                       <img src={this.state.photo} alt="Bot" />
-                      <ReactS3Uploader
-                        signingUrl="/s3/sign"
-                        autoUpload="true"
-                        onFinish={req => {
-                          this.setState({ photo: req.publicUrl });
-                        }}
-                      />
-                    </div>
-                    <div className="custom-file">
-                      <input type="file"
-                        className="custom-file-input"
-                        id="customFile"
-                        name="photo" />
-                      <label
-                        className="custom-file-label"
-                        name="photo" >Upload a Pic
-                  </label>
-                    </div>
-                    <button
+                    <label>Upload photo</label>
+                    <br />
+                    <ReactS3Uploader
+                      signingUrl="/s3/sign"
+                      onFinish={req => {
+                        this.setState({ photo: req.publicUrl });
+                      }}
+                    />
+                    <img src={this.state.photo} alt="Bot" />
+
+                    <Button
                       type="submit"
-                      className="btn btn-primary mt-2"
+                      className="btn btn-primary btn-success mt-2"
                       onClick={this.handleFormSubmit}
                     >
                       Create a GadaBot{" "}
-                    </button>
+                    </Button>
                   </div>
                 </form>
                 <button
                   type="button"
                   className="btn btn-secondary float-right"
                   name="close"
-                  onClick={this.handleClose}>
-                  close The Create Bot Form
+                  onClick={this.handleClose}
+                >
+                  Close
                 </button>
               </div>
             </div>
           </div>
         ) : (
-            <div>
-              <LineBot bot={this.state.newBot}
-                submitted={this.state.submitted}
-                userId={this.state.userId} 
-                user={this.state.user}/>
-            </div>
-          )}
+          <div>
+            <LineBot
+              bot={this.state.newBot}
+              submitted={this.state.submitted}
+              userId={this.state.userId}
+              user={this.state.user}
+            />
+          </div>
+        )}
       </>
     );
   }

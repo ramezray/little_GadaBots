@@ -3,13 +3,13 @@ import React, { Component } from "react";
 class FAQ extends Component {
   render() {
     return (
-      <div class="card">
-        <div class="card-body">
-          <h2 class="card-title">
+      <div className="card">
+        <div className="card-body">
+          <h2 className="card-title">
             <u>FAQ PAGE </u>
           </h2>
-          <p class="card-text">
-            <p>
+          <p className="card-text">
+            <span>
               <b> Q. How does this work?</b>
               <br /> <b>A. </b> You ("Person A") create a GadaBot and an
               account. (Be sure to write the provided tracking number on the
@@ -25,8 +25,11 @@ class FAQ extends Component {
               also includes a journal entry about your Bot's visit. Person B
               then mails it to someone else ("Person C") they know and the
               process repeats.
-            </p>
-            <p>
+            </span>
+
+            <br />
+
+            <span>
               <b>Q. I'm ready to create a Gadabot, how do I get started?</b>
               <br /> <b>A. </b> Great! It's easy. Register for a free account
               here. Then print out and color your GadaBot however you'd like.
@@ -44,20 +47,24 @@ class FAQ extends Component {
               you know who would like to host the bot for a visit. That person
               will then go through the same process you did. We have a simple
               instruction sheet for you to include with your Bot.
-            </p>
-            <p>
+            </span>
+
+            <br />
+
+            <span>
               <b>Q. A friend just sent me a GadaBot. What do I do now?</b>
               <br />
               <b>A. </b> Go to the GadaBot's CheckIn page. (You'll need the Bot
-              ID on the back of the Bot.) Write a journal entry about what your
+              ID on the back of the Bot. Write a journal entry about what your
               GadaBot saw and upload a picture or two of your Gadabot enjoying
               the sights during its visit with you. Then mail (postal mail) the
               Bot to someone else you know who would like to host the bot for a
               visit. That person will then go through the same process you did.
               We have a simple instruction sheet for you to inlcude with your
               Bot.
-            </p>
-            <p>
+            </span>
+            <br />
+            <span>
               <b>Q. What if my Bot gets damaged or goes missing?</b>
               <br /> <b>A. </b> That can sometimes be sad, but fortuntately you
               have the option to create a brand new Bot with a new name, new Bot
@@ -68,13 +75,15 @@ class FAQ extends Component {
               from our template and use the same ID as the original missing or
               damaged Bot. Try to color the Bot as close to the original as
               possible.
-            </p>
-            <p>
+            </span>
+            <br />
+            <span>
               <b>Q. Where does the name "GadaBot" come from?</b>
               <br /> <b>A. </b> GadaBot is a play on words based on the term
               "gadabout" which means wanderer or globetrotter.
-            </p>
-            <p>
+            </span>
+            <br />
+            <span>
               <b>Q. Where did the idea of GadaBots come from?</b>
               <br /> <b>A. </b> The 1960s children's book titled Flat Stanley by
               Jeff Brown served as original inspiration for this project. In the
@@ -88,8 +97,9 @@ class FAQ extends Component {
               students. The Internet thus provides the way the GadaBot creator
               and recipients can see their Bots take one big multi-stop
               adventure.
-            </p>
-            <p>
+            </span>
+            <br />
+            <span>
               <b>Q. Who is behind GadaBots?</b>
               <br /> <b>A. </b> GadaBots was created in 2019 with love and sweat
               by Ray Wasif, Kristen Johanson, Huiying (Jojo) Wang, Stephanie
@@ -98,7 +108,8 @@ class FAQ extends Component {
               Development Boot Camp. We hail from four different countries and
               are enthusiastic about spreading the interconnectedness of our
               world with the youth (and adults) of today.
-            </p>
+            </span>
+            <br />
           </p>
         </div>
       </div>

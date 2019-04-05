@@ -1,13 +1,9 @@
-import React, { Component } from 'react';
-import {
-  Button,
-
-} from 'reactstrap';
-import API from '../../utils/API';
+import React, { Component } from "react";
+import { Button } from "reactstrap";
+import API from "../../utils/API";
 import ReactS3Uploader from "react-s3-uploader";
 
 class UpdateUser extends Component {
-
   constructor(props, context) {
     super(props, context);
 
@@ -35,7 +31,6 @@ class UpdateUser extends Component {
     });
   };
 
-  
   handleClose() {
     this.setState({ show: false });
   }
@@ -44,8 +39,7 @@ class UpdateUser extends Component {
     this.setState({ show: true });
   }
 
-
-onChange = e => {
+  onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
@@ -53,80 +47,90 @@ onChange = e => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
 
-  switch(event.target.name) {
+    switch (event.target.name) {
       case "nameUpdate":
         API.updateName(this.state.userid, this.state.name);
         break;
-    case "photoUpdate":
+      case "photoUpdate":
         // code block
         alert("new photo submit clicked");
         break;
 
-        case "close":
+      case "close":
         // code block
         this.setState({
-          show: false,
-        })
+          show: false
+        });
         break;
-    default: 
-          // code block photoUpdate
-          
-
-      }
-
-  }
+      default:
+      // code block photoUpdate
+    }
+  };
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <>
-      <Button onClick={this.handleShow} href='#'>
-      Update Profile
-    </Button>
+        <Button onClick={this.handleShow} href="#" className="btn btn-success">
+          Update Profile
+        </Button>
+        <br />
+        <br />
 
-    {this.state.show ?
-        <div className="card">
-          <div className="card-body">
-            <div className="update-user">
-              <form>
-
-                <div className="form-row align-items-center">
-                  
+        {this.state.show ? (
+          <div className="card">
+            <div className="card-body">
+              <div className="update-user">
+                <form>
+                  <div className="form-row align-items-center">
                     <label>Change your Name</label>
-                    <input className="form-control"
+                    <input
+                      className="form-control"
                       id="name-update"
                       name="name"
                       value={this.state.name}
-                      onChange={this.handleInputChange} />
-                 
-                  
+                      onChange={this.handleInputChange}
+                    />
+                    <br />
+                    <br />
+                    <br />
+                    <button
+                      name="nameUpdate"
+                      type="submit"
+                      className="btn btn-primary"
+                      onClick={this.handleFormSubmit}
+                    >
+                      Update name
+                    </button>
+                  </div>
+                  <br />
+                  <div>
+                    <label>Change your profile pic</label>
+                    <ReactS3Uploader
+                      signingUrl="/s3/sign"
+                      onFinish={req => {
+                        API.updateUserImage(this.state.userid, req.publicUrl);
+                      }}
+                    />
+                  </div>
                   <br />
                   <button
-                  name="nameUpdate"
-                  type="submit"
-                  className="btn btn-primary"
-                  onClick={this.handleFormSubmit}>Update name</button>
-                 
-                </div>
-                <br />
-
-                  {/* TODO: Fix styles and add label */}
-                <ReactS3Uploader 
-                            signingUrl="/s3/sign"
-                            autoUpload="true" 
-                            onFinish={ (req) => { API.updateUserImage(this.state.userid, req.publicUrl); }}/>
-                <br />
-              <button type="button" 
-              className="btn btn-secondary" 
-              name="close"
-              onClick={this.handleClose}
-              >Close</button>
-              </form>
+                    type="button"
+                    className="btn btn-secondary"
+                    name="close"
+                    onClick={this.handleClose}
+                  >
+                    Close
+                  </button>
+                  <br />
+                  <br />
+                </form>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      :  <br />   }
-       
+        ) : (
+          <br />
+        )}
       </>
     );
   }

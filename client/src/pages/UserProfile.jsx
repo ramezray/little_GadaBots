@@ -12,7 +12,7 @@ import {
   Col,
   CardTitle,
   CardText,
-  // CardImg,
+  CardImg,
   CardBody
 } from "reactstrap";
 
@@ -30,33 +30,25 @@ class UserProfile extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.auth.user === null && this.props.auth.user !== null) {
-      console.log("user Bots:", this.props.auth.user.bots);
       if (this.props.auth.user.bots) {
-        // API.getBotsByUser(this.props.auth.user._id);
-
         this.setState({ botIds: this.props.auth.user.bots });
-
         this.props.auth.user.bots.forEach(id => {
           API.getBot(id)
             .then(res => {
-              console.log("this bot is:", res.data);
               botData.push(res.data);
             })
             .then(
               this.setState({
                 bots: botData
               })
-            )
-            .then(console.log("state of bot page after id push", this.state));
+            );
         });
       }
     }
   }
 
   render() {
-    // console.log(this.props.auth);
     const { user } = this.props.auth;
-
     // Don't render until the user is available
     if (!user) {
       return <h5>Please log in to see this page</h5>;
@@ -65,7 +57,6 @@ class UserProfile extends Component {
     return (
       <Container>
         <br />
-
         <center>
           <h1>{`Welcome ${user.name}`}!</h1>
           <CheckIn user={user} />
@@ -76,14 +67,10 @@ class UserProfile extends Component {
         <Row>
           <Col sm="4">
             <Card>
-              <img
-                style={{ width: 300, height: 450 }}
-                src="https://steembottracker.com/img/bot_logo.png"
-                alt="Card cap"
-              />
+              <CardImg src={user.image_url} />
               <CardBody>
                 <CardTitle>
-                  <h5>Your Info</h5>
+                  <h5>Your Profile</h5>
                 </CardTitle>
                 <CardText>Name: {user.name}</CardText>
                 <CardText>Email: {user.email}</CardText>
@@ -100,7 +87,10 @@ class UserProfile extends Component {
 
                 <ul>
                   {this.state.bots.map(bot => (
-                    <li className="list-group-item list-group-item-action">
+                    <li
+                      key={bot._id}
+                      className="list-group-item list-group-item-action"
+                    >
                       <div key={bot._id}>
                         <div className="row">
                           <div className="col-3">
@@ -136,13 +126,6 @@ class UserProfile extends Component {
             )}
           </Col>
         </Row>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
         <br />
         <br />
         <Row />

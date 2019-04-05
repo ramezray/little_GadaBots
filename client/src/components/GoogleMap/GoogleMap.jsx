@@ -32,12 +32,12 @@ export class MapContainer extends Component {
 
   //function when user click one of the marker
   onMarkerClick = id => (props, marker, e) => {
-    console.log("onMarkerClick", {
-      selectedId: id,
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
+    // console.log("onMarkerClick", {
+    //   selectedId: id,
+    //   selectedPlace: props,
+    //   activeMarker: marker,
+    //   showingInfoWindow: true
+    // });
     this.setState({
       selectedId: id,
       selectedPlace: props,
@@ -70,17 +70,16 @@ export class MapContainer extends Component {
     }
   };
   getOneBotInfo = () => {
-    API.getBot(this.state.selectedId)
-      .then(res => {
-        console.log("getOneBotInfo got", res.data);
-        this.setState({
-          InfoWindowBotName: res.data.name,
-          InfoWindowBotImage: res.data.checkIns[0].pic,
-          InfoWindowBotjournalEntry: res.data.checkIns[0].journalEntry,
-          InfoWindowBotLocation: res.data.checkIns.slice(-1)[0].location
-        });
-      })
-      .catch(err => console.log("getOneBotInfo error", err));
+    API.getBot(this.state.selectedId).then(res => {
+      // console.log("getOneBotInfo got", res.data);
+      this.setState({
+        InfoWindowBotName: res.data.name,
+        InfoWindowBotImage: res.data.checkIns[0].pic,
+        InfoWindowBotjournalEntry: res.data.checkIns[0].journalEntry,
+        InfoWindowBotLocation: res.data.checkIns.slice(-1)[0].location
+      });
+    });
+    // .catch(err => console.log("getOneBotInfo error", err));
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -132,7 +131,9 @@ export class MapContainer extends Component {
                     to={`/botProfile/${this.state.selectedId}`}
                     state={this.state.selectedId}
                   >
-                    <Button className="float-right">View Bot</Button>
+                    <Button className="float-right btn-success">
+                      View Bot
+                    </Button>
                   </Link>
                 </Router>
               </Container>

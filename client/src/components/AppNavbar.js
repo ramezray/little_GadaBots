@@ -37,7 +37,7 @@ class AppNavbar extends Component {
     const authLinks = (
       <Fragment>
         <NavItem>
-          <span className="navbar-text mr-3">
+          <span className="navbar-text mr-4">
             <strong>{user ? `Welcome ${user.name}` : ""}</strong>
           </span>
         </NavItem>
@@ -64,6 +64,9 @@ class AppNavbar extends Component {
       <div>
         <Navbar color="info" dark expand="sm" className="mb-5">
           <Container>
+            <NavbarBrand href="/">
+              <img src="/miniBot_logo.png" alt="logo" />
+            </NavbarBrand>
             <NavbarBrand href="/">GadaBots</NavbarBrand>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
