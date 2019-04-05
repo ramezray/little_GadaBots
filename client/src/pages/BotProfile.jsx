@@ -46,7 +46,7 @@ class App extends Component {
           <div className="card">
             <div className="row">
               <div className="col-3">
-                <Canvas src={this.state.Bot_Image} alt={this.state.bot_Name} />
+                <Canvas src="" />
               </div>
               <div className="card-body col-9">
                 <div className="card-title">

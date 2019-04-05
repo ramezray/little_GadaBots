@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Canvas from "../Canvas";
 const wtf = require("wtf_wikipedia");
 
 class FunFact extends Component {
@@ -37,11 +38,12 @@ class FunFact extends Component {
       <li className="list-group-item">
         <div className="row">
           <div className="col-3">
-            <img
+            <Canvas src={this.props.pic} alt={this.props.location} />
+            {/* <img
               className="card-img-top"
               src={this.props.pic}
               alt={this.props.location}
-            />
+            /> */}
           </div>
           <div className="col-9">
             <div className="card-body">

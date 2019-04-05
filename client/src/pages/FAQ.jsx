@@ -1,15 +1,20 @@
 import React, { Component } from "react";
 
+
 class FAQ extends Component {
   render() {
     return (
-      <div className="card">
-        <div className="card-body">
-          <h2 className="card-title">
+      <div className="container" >
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">
+          <img className="card-img-cap" src="GadaBot1.png" alt="GadaBot"/>
             <u>FAQ PAGE </u>
           </h2>
-          <p className="card-text">
-            <span>
+         
+          <p class="card-text">
+             <span>
+
               <b> Q. How does this work?</b>
               <br /> <b>A. </b> You ("Person A") create a GadaBot and an
               account. (Be sure to write the provided tracking number on the
@@ -112,6 +117,7 @@ class FAQ extends Component {
             <br />
           </p>
         </div>
+      </div>
       </div>
     );
   }

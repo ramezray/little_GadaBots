@@ -19,7 +19,7 @@ class CreateGadaBot extends Component {
       name: "",
       homeTown: "",
       journal: "",
-      photo: "GadaBot.svg",
+      photo: "Gadabot.png",
       newBot: {},
       submitted: false
     };
